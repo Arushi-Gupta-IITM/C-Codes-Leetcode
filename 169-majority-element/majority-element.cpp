@@ -21,6 +21,15 @@ public:
             }
         }
 
-        return ans;        
+        freq = 0;
+        for(int i=0; i<n; i++) {
+            if(nums[i] == ans) {
+                freq++;
+            }
+        }
+        if(freq > n/2)
+        return ans; 
+        else 
+        return -1;       
     }
 };
