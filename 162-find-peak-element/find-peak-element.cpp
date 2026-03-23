@@ -4,12 +4,19 @@ public:
         // Brute force approach
         int n = nums.size();
         if(n == 1) return 0;
-        if(nums[0] >nums[1]) return 0;
-        if(nums[n-1] > nums[n-2]) return (n-1);
+        if(nums[0] > nums[1]) return 0;
+        if(nums[n-1] > nums[n-2]) return n-1;
+        int si = 1;
+        int ei = n-2;
 
-        for(int i=1; i<=n-2; i++) {
-            if(nums[i] > nums[i-1] && nums[i] > nums[i+1]) return i;
+        while(si < ei) {
+            int mid = si + (ei-si)/2;
+            if(nums[mid] < nums[mid+1]) {
+                si = mid+1;
+            } else {
+                ei = mid;
+            }
         }
-        return -1;
+        return si;
     }
 };
