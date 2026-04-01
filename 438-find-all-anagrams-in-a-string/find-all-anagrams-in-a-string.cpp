@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool isEqualArray(vector<int> arr1, vector<int> arr2) {
+    bool isEqualArray(vector<int> &arr1, vector<int> &arr2) {
         for(int i=0; i<26; i++) {
             if(arr1[i] != arr2[i]) return false;
         }
