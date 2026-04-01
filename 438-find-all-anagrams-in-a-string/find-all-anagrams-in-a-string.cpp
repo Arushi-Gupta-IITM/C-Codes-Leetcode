@@ -14,21 +14,18 @@ public:
         if(n2 > n1) return ans;
 
         vector<int> freqP(26, 0);
-        string substring = s.substr(0, n2);
         vector<int> freqS(26, 0);
 
         for(int i=0; i<n2; i++) {
             freqP[p[i]-'a']++;
-            freqS[substring[i]-'a']++;
+            freqS[s[i]-'a']++;
         }
 
         int i;
         for(i=n2; i<n1; i++) {
             if(isEqualArray(freqP, freqS)) ans.push_back(i-n2);
-            freqS[substring[0]-'a']--;
+            freqS[s[i-n2]-'a']--;
             freqS[s[i]-'a']++;
-            substring.erase(0, 1);
-            substring += s[i];
         }
         if(isEqualArray(freqP, freqS)) ans.push_back(i-n2);
         return ans;
