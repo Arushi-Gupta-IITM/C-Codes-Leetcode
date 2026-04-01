@@ -9,6 +9,7 @@ public:
             for(int j=0; j<min(curr.length(), prefix.length()); j++) {
                 if(prefix[j] != curr[j]) {
                     prefix = prefix.substr(0, j);
+                    break;
                 }
             }
             if(curr.length() < prefix.length()) {
@@ -16,6 +17,5 @@ public:
             }
         }
         return prefix;
-
     }
 };
