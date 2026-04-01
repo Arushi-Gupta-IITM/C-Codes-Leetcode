@@ -1,32 +1,36 @@
 class Solution {
 public:
-    bool isAnagram(string s1, string s2) {
-        vector<int> freq(26, 0);
-        for(int i=0; i<s1.length(); i++) {
-            freq[s1[i]-'a']++;
-        }
-        for(int i=0; i<s2.length(); i++) {
-            freq[s2[i]-'a']--;
-        }
-
+    bool isEqualArray(vector<int> arr1, vector<int> arr2) {
         for(int i=0; i<26; i++) {
-            if(freq[i] != 0) return false;
+            if(arr1[i] != arr2[i]) return false;
         }
         return true;
     }
+
     vector<int> findAnagrams(string s, string p) {
         vector<int> ans;
         int n1 = s.length();
         int n2 = p.length();
+        if(n2 > n1) return ans;
 
+        vector<int> freqP(26, 0);
         string substring = s.substr(0, n2);
+        vector<int> freqS(26, 0);
+
+        for(int i=0; i<n2; i++) {
+            freqP[p[i]-'a']++;
+            freqS[substring[i]-'a']++;
+        }
+
         int i;
         for(i=n2; i<n1; i++) {
-            if(isAnagram(substring, p)) ans.push_back(i-n2);
+            if(isEqualArray(freqP, freqS)) ans.push_back(i-n2);
+            freqS[substring[0]-'a']--;
+            freqS[s[i]-'a']++;
             substring.erase(0, 1);
             substring += s[i];
         }
-        if(isAnagram(substring, p)) ans.push_back(i-n2);
+        if(isEqualArray(freqP, freqS)) ans.push_back(i-n2);
         return ans;
     }
 };
