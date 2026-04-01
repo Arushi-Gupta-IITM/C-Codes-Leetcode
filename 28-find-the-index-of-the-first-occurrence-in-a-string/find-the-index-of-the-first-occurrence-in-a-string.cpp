@@ -10,7 +10,8 @@ public:
         if(substring == needle) return 0;
 
         for(int i=n2; i<n1; i++) {
-            substring = substring.substr(1) + haystack[i];
+            substring.erase(0, 1);
+            substring += haystack[i];
             if(substring == needle) return (i-n2+1);
         }
 
