@@ -5,26 +5,14 @@ public:
             return false;
         }
 
-        vector<int> num;
-
-        while(x > 0) {
+        int revNum = 0; 
+        int copy = x;
+        while(x != 0) {
             int dig = x%10;
-            num.push_back(dig);
+            if(revNum > INT_MAX/10 || revNum < INT_MIN/10) return false;
+            revNum = revNum*10 + dig;
             x = x/10;
-        }
-
-        int n = num.size();
-
-        int si = 0;
-        int ei = n-1;
-        while(si < ei) {
-            if(num[si] != num[ei]) {
-                return false;
-            }
-            si++;
-            ei--;
-        }
-
-        return true;        
+        }  
+        return copy == revNum;    
     }
 };
