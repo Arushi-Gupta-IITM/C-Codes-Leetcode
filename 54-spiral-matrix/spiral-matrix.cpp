@@ -4,21 +4,7 @@ public:
         int m = mat.size();
         int n = mat[0].size();
         vector<int> ans;
-
-        if(m == 1) {
-            for(int i=0; i<n; i++) {
-                ans.push_back(mat[0][i]);
-            }
-            return ans;
-        }
-
-        if(n == 1) {
-            for(int i=0; i<m; i++) {
-                ans.push_back(mat[i][0]);
-            }
-            return ans;
-        }
-
+        
         int sr = 0;
         int sc = 0;
         int er = m-1;
