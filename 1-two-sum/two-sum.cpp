@@ -6,9 +6,9 @@ public:
         unordered_map<int, int> map;
 
         for(int i=0; i<n; i++) {
-            int tar = target - nums[i];
-            if(map.find(tar) != map.end()) {
-                ans.push_back(map[tar]);
+            int complement = target - nums[i];
+            if(map.find(complement) != map.end()) {
+                ans.push_back(map[complement]);
                 ans.push_back(i);
                 return ans;
             }
