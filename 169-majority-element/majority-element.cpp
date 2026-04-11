@@ -1,24 +1,15 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        // sort(nums.begin(), nums.end());
-        // int mid = nums.size()/2;
-        // return nums[mid];
-
-        //Moore's voting algorithm
         int n = nums.size();
-        int freq = 0, ans = 0;
-
+        int ans = nums[0];
+        int freq = 0;
         for(int i=0; i<n; i++) {
             if(freq == 0) {
                 ans = nums[i];
             }
-
-            if(nums[i] == ans) {
-                freq++;
-            } else {
-                freq--;
-            }
+            if(nums[i] == ans) freq++;
+            else freq--;
         }
 
         freq = 0;
@@ -27,9 +18,8 @@ public:
                 freq++;
             }
         }
-        if(freq > n/2)
-        return ans; 
-        else 
-        return -1;       
+
+        if(freq > n/2) return ans;
+        return -1;
     }
 };
