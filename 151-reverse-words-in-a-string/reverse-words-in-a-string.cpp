@@ -5,18 +5,20 @@ public:
         int n = s.length();
         string word = "";
         string ans = "";
+        int wordLen = 0;
 
         for(int i=n-1; i>=0; i--) {
-            if(s[i] != ' ') {
-                word = s[i] + word;
-            } else {
-                if(word.length() > 0) {
-                    ans = ans + word + " ";
-                    word = "";
-                }
-            }
+           if(s[i] != ' ') {
+            wordLen++;
+           } else if(wordLen > 0) {
+                ans = ans + s.substr(i+1, wordLen) + " ";
+                wordLen = 0;
+           }
         }
 
+        if(ans.length() > 0)
         return ans.substr(0, ans.length()-1);
+
+        return ans;
     }
 };
