@@ -2,40 +2,46 @@ class Solution {
 public:
     int compress(vector<char>& chars) {
         int n = chars.size();
-        char curr = chars[0];
-        int count = 1;
         int in = 0;
 
-        for(int i=1; i<n; i++) {
-            if(chars[i] == curr) {
-                count++;
+        int currCount = 1;
+        char currChar = chars[0];
+
+        for(int i=1; i<n; i++)
+        if(chars[i] == currChar) {
+            currCount++;
+        } else {
+            if(currCount == 1) {
+                chars[in] = currChar;
+                in++;
             } else {
-                if(count == 1) {
-                    chars[in] = curr;
+                chars[in] = currChar;
+                in++;
+                string countStr = to_string(currCount);
+                for(int j=0; j<countStr.length(); j++) {
+                    chars[in] = countStr[j];
                     in++;
                 }
-                else {
-                    chars[in] = curr;
-                    in++;
-                    string countStr = to_string(count);
-                    for(int j=0; j<countStr.length(); j++) {
-                        chars[in] = countStr[j];
-                        in++;
-                    }                   
-                }
-                curr = chars[i];
-                count = 1;
             }
+            currCount = 1;
+            currChar = chars[i];
         }
-        chars[in] = curr;
-        in++;
-        if(count > 1) {
-            string countStr = to_string(count);
-            for(int j=0; j<countStr.length(); j++) {
-            chars[in] = countStr[j];
+
+
+
+        if(currCount == 1) {
+            chars[in] = currChar;
             in++;
+        } else {
+            chars[in] = currChar;
+            in++;
+            string countStr = to_string(currCount);
+            for(int j=0; j<countStr.length(); j++) {
+                chars[in] = countStr[j];
+                in++;
             }
         }
+
         return in;
     }
 };
