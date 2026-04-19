@@ -11,14 +11,15 @@ public:
         subset.pop_back();
 
         // skip duplicates
-        while (i + 1 < nums.size() && nums[i] == nums[i + 1]) {
-            i++;
+        int idx = i+1;
+        while (idx < nums.size() && nums[idx] == nums[idx-1]) {
+            idx++;
         }
 
         // exclude current element
-        getSubsets(nums, subset, ans, i + 1);
+        getSubsets(nums, subset, ans, idx);
     }
-    
+
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         vector<int> subset;
