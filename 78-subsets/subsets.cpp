@@ -2,7 +2,7 @@ class Solution {
 public:
     void printSubsets(vector<int> &nums, vector<int> &subset, vector<vector<int>> &ans, int in) {
         if(in == nums.size()) {
-            ans.push_back({subset}); // values of subset vector are pushed back as a vector in ans
+            ans.push_back(subset); // values of subset vector are pushed back as a vector in ans
             return;
         }
         //include
