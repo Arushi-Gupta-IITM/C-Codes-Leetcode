@@ -19,11 +19,10 @@ public:
         while(temp != NULL && temp->next != NULL) {
             if(temp->val == temp->next->val) {
                 temp->next = temp->next->next;
-            }
-            if(temp != NULL && temp->next != NULL && temp->val == temp->next->val) {
-                continue;
-            }
-            temp = temp->next;
+            } else {
+                temp = temp->next;
+            }          
+            
         }
         return head;
     }
