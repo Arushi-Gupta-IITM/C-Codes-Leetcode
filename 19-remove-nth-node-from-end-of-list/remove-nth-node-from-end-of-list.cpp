@@ -10,34 +10,36 @@
  */
 class Solution {
 public:
-    ListNode* removeNthFromEnd(ListNode* head, int n) { // 1 based indexing        
-        int size = 0;
-        ListNode* curr = head;
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
 
-        while(curr != NULL) {
-            size++;
-            curr = curr->next;
+        ListNode* dummy = new ListNode(0, head);
+        ListNode* slow = dummy;
+        ListNode* fast = head;
+
+        for(int i=0; i<n; i++) {
+            fast = fast->next;
         }
 
-        if(n == size) {
+        if(fast == NULL) { //delete head
+            ListNode* delNode = head;
             head = head->next;
+            delete delNode;
+            dummy->next = NULL;
+            delete dummy;
             return head;
         }
 
-        int indOfPrev = size - n;
-        int ind = 1;
-        curr = head;
-
-        while(curr != NULL) {
-            if(ind == indOfPrev) {
-                ListNode* delNode = curr->next;
-                curr->next = delNode->next;
-                delete delNode;
-                break;
-            }
-            ind++;
-            curr = curr->next;
+        while(fast != NULL) {
+            slow = slow->next;
+            fast = fast->next;
         }
+
+        ListNode* delNode = slow->next;
+        slow->next = delNode->next;
+        delete delNode;
+
+        dummy->next = NULL;
+        delete dummy;
         return head;
     }
 };
