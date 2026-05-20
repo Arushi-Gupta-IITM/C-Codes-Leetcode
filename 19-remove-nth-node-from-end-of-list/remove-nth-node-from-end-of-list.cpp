@@ -10,8 +10,7 @@
  */
 class Solution {
 public:
-    ListNode* removeNthFromEnd(ListNode* head, int n) {
-        
+    ListNode* removeNthFromEnd(ListNode* head, int n) { // 1 based indexing        
         int size = 0;
         ListNode* curr = head;
 
@@ -31,7 +30,9 @@ public:
 
         while(curr != NULL) {
             if(ind == indOfPrev) {
-                curr->next = curr->next->next;
+                ListNode* delNode = curr->next;
+                curr->next = delNode->next;
+                delete delNode;
                 break;
             }
             ind++;
