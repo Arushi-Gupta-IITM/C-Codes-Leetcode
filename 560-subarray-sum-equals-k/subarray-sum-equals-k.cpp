@@ -9,12 +9,14 @@ public:
         
         int count = 0;
         unordered_map<int, int> mp; // prefixSum and their frequency
-        int ps = 0;
-        mp[0] = 1;
+        int ps = 0;        
 
         for(int i=0; i<n; i++) {
             ps += nums[i];
             int reqSum = ps - k;
+            if(reqSum == 0) {
+                count++;
+            }
             if(mp.find(reqSum) != mp.end()) {
                 count += mp[reqSum];
             }
