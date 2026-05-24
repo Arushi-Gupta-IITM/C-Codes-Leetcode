@@ -8,16 +8,18 @@ public:
         }
         
         int count = 0;
-        int sum = 0;
+        unordered_map<int, int> mp; // prefixSum and their frequency
+        int ps = 0;
+        mp[0] = 1;
 
         for(int i=0; i<n; i++) {
-            sum = 0;
-            for(int j=i; j<n; j++) {
-                sum += nums[j];
-                if(sum == k) count++;
+            ps += nums[i];
+            int reqSum = ps - k;
+            if(mp.find(reqSum) != mp.end()) {
+                count += mp[reqSum];
             }
-        }
-
-        return count;       
+            mp[ps]++;
+        } 
+        return count;     
     }
 };
