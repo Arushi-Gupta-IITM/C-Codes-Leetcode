@@ -7,23 +7,17 @@ public:
             else return 0;
         }
         
-        unordered_map<int, int> mp;
-        mp[0] = 1;
-
-        int prefixSum = 0;
         int count = 0;
+        int sum = 0;
 
-        for(int num : nums) {
-            prefixSum += num;
-
-            if(mp.find(prefixSum - k) != mp.end()) {
-                count += mp[prefixSum - k];
+        for(int i=0; i<n; i++) {
+            sum = 0;
+            for(int j=i; j<n; j++) {
+                sum += nums[j];
+                if(sum == k) count++;
             }
-
-            mp[prefixSum]++;
         }
 
-        return count;
-        
+        return count;       
     }
 };
