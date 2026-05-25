@@ -16,12 +16,6 @@ public:
             idx--;
         }
 
-        while(i >= 0) {
-            nums1[idx] = nums1[i];
-            i--;
-            idx--;
-        }
-
         while(j >= 0) {
             nums1[idx] = nums2[j];
             j--;
