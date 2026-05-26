@@ -11,16 +11,16 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        // base case or edge case
+        // base case
         if(head == NULL || head->next == NULL) {
-            return true;
+            return head;
         }
 
-        // finding middle node of the linked list
+        // finding mid node
         ListNode* prev = NULL;
         ListNode* slow = head;
         ListNode* fast = head;
-        
+
         while(fast != NULL && fast->next != NULL) {
             prev = slow;
             slow = slow->next;
@@ -28,16 +28,16 @@ public:
         }
 
         prev->next = NULL;
-        ListNode* head2;
-        if(fast == NULL) {      // even
-            head2 = slow;
-        } else {                // odd
-            head2 = slow->next;
-}
+        ListNode* newHead;
+        if(fast == NULL) {
+            newHead = slow;
+        } else {
+            newHead = slow->next;
+        }       
 
-        // reversing the second half of the linked list
+        //reverse the 2nd linked list
         prev = NULL;
-        ListNode* curr = head2;
+        ListNode* curr = newHead;
         ListNode* next = NULL;
 
         while(curr != NULL) {
@@ -46,20 +46,20 @@ public:
 
             prev = curr;
             curr = next;
+
         }
+        newHead = prev;
 
-        head2 = prev;
-        
-        // comparing both linked lists
+        // comparing two linked lists to be same
         ListNode* temp1 = head;
-        ListNode* temp2 = head2;
+        ListNode* temp2 = newHead;
 
-        while(temp1 != NULL && temp2 != NULL) {
+        while(temp2 != NULL) {
             if(temp1->val != temp2->val) return false;
             temp1 = temp1->next;
             temp2 = temp2->next;
         }
 
-        return (temp1 == NULL && temp2 == NULL);
+        return true;
     }
 };
