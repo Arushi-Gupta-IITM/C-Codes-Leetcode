@@ -23,11 +23,9 @@ public:
             temp = temp->next;
         }
 
-        while(k > size) {
-            k = k-size;
-        }
+        k = k%size;
 
-        if(k == size || k == 0) {
+        if(k == 0) {
             return head;
         }
 
