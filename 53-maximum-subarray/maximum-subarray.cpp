@@ -7,9 +7,11 @@ public:
 
         for(int i=0; i<n; i++) {
             currSum += nums[i];
-            maxSum = max(maxSum, currSum);
+            maxSum = max(currSum, maxSum);
+
             if(currSum < 0) currSum = 0;
         }
+
         return maxSum;
     }
 };
