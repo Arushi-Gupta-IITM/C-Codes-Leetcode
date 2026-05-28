@@ -1,31 +1,29 @@
 class Solution {
 public:
-    void getSubsets(vector<int> &nums, vector<int> &subset, vector<vector<int>> &ans, int i) {
+
+    void subsetsWithDupUtil(vector<int> &nums, vector<vector<int>> &ans, vector<int> &subset, int i) {
         if(i == nums.size()) {
             ans.push_back(subset);
             return;
         }
 
         subset.push_back(nums[i]);
-        getSubsets(nums, subset, ans, i + 1);
+        subsetsWithDupUtil(nums, ans, subset, i+1);
+
         subset.pop_back();
+        //continuous exclusion of all repeating elements
 
-        // skip duplicates
-        int idx = i+1;
-        while (idx < nums.size() && nums[idx] == nums[idx-1]) {
-            idx++;
-        }
+        int ind = i+1;
+        while(ind < nums.size() && nums[ind] == nums[ind-1]) ind++;
 
-        // exclude current element
-        getSubsets(nums, subset, ans, idx);
+        subsetsWithDupUtil(nums, ans, subset, ind);
     }
-
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         sort(nums.begin(), nums.end());
-        vector<int> subset;
         vector<vector<int>> ans;
+        vector<int> subset;
 
-        getSubsets(nums, subset, ans, 0);
+        subsetsWithDupUtil(nums, ans, subset, 0);
         return ans;
     }
 };
