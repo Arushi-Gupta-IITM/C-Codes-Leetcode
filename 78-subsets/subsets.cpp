@@ -1,7 +1,7 @@
 class Solution {
 public:
 
-    void subsetsUtil(vector<int> &nums, vector<int> subset, vector<vector<int>> &ans, int i) {
+    void subsetsUtil(vector<int> &nums, vector<int> &subset, vector<vector<int>> &ans, int i) {
         if(i == nums.size()) {
             ans.push_back(subset);
             return;            
