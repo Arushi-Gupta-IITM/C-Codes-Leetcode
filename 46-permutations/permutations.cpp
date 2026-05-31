@@ -2,15 +2,15 @@ class Solution {
 public:
     void getPerm(vector<vector<int>> &ans, int ind, vector<int> &nums) {
         if(ind == nums.size()) {
-            ans.push_back(nums);
+            ans.push_back({nums});
             return;
         }
 
         for(int i=ind; i<nums.size(); i++) {
-            swap(nums[ind], nums[i]);
+            swap(nums[ind], nums[i]); // idx place => choice of ith element
             getPerm(ans, ind+1, nums);
 
-            //backtrack
+            //backtrack step
             swap(nums[ind], nums[i]);
         }
     }
