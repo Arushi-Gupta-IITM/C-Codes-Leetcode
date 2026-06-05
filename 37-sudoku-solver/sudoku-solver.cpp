@@ -47,7 +47,7 @@ public:
                     solved = sudokuSolver(board, row, col+1);
                 }
 
-                if(solved == true) return true;
+                if(solved == true) return true; // return when a correct answer is found, no need for futher backtracking
                 board[row][col] = '.';
             } 
         }
