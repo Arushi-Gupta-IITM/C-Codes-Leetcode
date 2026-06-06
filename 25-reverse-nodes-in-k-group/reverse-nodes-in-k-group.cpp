@@ -17,27 +17,25 @@ public:
 
         ListNode* curr = head;
         for(int i=1; i<k; i++) {
-            if(curr == NULL) return head;
             curr = curr->next;
+            if(curr == NULL) return head;           
         }
-        if(curr != NULL) {
-            ListNode* nextSetHead = curr->next;
-            curr = head;
-            ListNode* prev = prevNode;
-            ListNode* next = NULL;
 
-            while(curr != nextSetHead) {
-                next = curr->next;
-                curr->next = prev;
+        ListNode* nextSetHead = curr->next;
+        curr = head;
+        ListNode* prev = prevNode;
+        ListNode* next = NULL;
 
-                prev = curr;
-                curr = next;
-            }
-            head->next = reverseKGroupUtil(nextSetHead, k, head);
-            return prev;
-        }      
+        while(curr != nextSetHead) {
+            next = curr->next;
+            curr->next = prev;
 
-        return head;
+            prev = curr;
+            curr = next;
+        }
+        head->next = reverseKGroupUtil(nextSetHead, k, head);
+        return prev;
+             
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
         return reverseKGroupUtil(head, k, NULL);
