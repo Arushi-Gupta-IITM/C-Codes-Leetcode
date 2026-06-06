@@ -15,10 +15,12 @@ public:
             return head;
         }
 
-        ListNode* nextSetHead = head->next->next;
-        head->next->next = head;
-        ListNode* newHead = head->next;
-        head->next = swapPairs(nextSetHead);
-        return newHead;
+        ListNode* first = head;
+        ListNode* second = head->next;
+        ListNode* rest = second->next;
+
+        second->next = first;
+        first->next = swapPairs(rest);
+        return second;
     }
 };
