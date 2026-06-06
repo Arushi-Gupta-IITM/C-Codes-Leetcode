@@ -13,27 +13,28 @@ class Solution {
 public:
     Node* flatten(Node* head) {
         if(head == NULL) return head;
+        Node* curr = head;
 
-        Node* nextNode = head->next;
-        Node* childList = flatten(head->child);
-        Node* nextList = flatten(nextNode);
+        while(curr != NULL) {
+            if(curr->child == NULL) {
+                curr = curr->next;
+            } else {
+                Node* nextNode = curr->next;
+                Node* childList = flatten(curr->child);
+                curr->next = childList;
+                childList->prev = curr;
+                curr->child = NULL;
 
-        Node* tail = childList;
-        while(tail != NULL && tail->next != NULL) {
-            tail = tail->next;
+                Node* tail = childList;
+                while(tail->next != NULL) {
+                    tail = tail->next;
+                }
+                tail->next = nextNode;
+                if(nextNode != NULL) nextNode->prev = tail;
+                curr = nextNode;
+            }
         }
 
-        if(childList != NULL) {
-            head->next = childList;
-            childList->prev = head;
-            tail->next = nextList;
-            if(nextList != NULL) nextList->prev = tail;
-        } else {
-            head->next = nextList;
-            if(nextList != NULL) nextList->prev = head;
-        }
-
-        head->child = NULL;
         return head;
     }
 };
