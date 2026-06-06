@@ -38,6 +38,7 @@ public:
              
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
+        if(k == 1) return head;
         return reverseKGroupUtil(head, k, NULL);
     }
 };
