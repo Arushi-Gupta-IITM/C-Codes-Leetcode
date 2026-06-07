@@ -1,37 +1,41 @@
 class Solution {
 public:
-    void nextPermutation(vector<int>& nums) {
+    void reverseElements(vector<int> &nums, int start, int end) {
+        int i = start, j = end;
+        while(i < j) {
+            swap(nums[i++], nums[j--]);
+        }
+    }
+    void nextPermutation(vector<int> &nums) {
         int n = nums.size();
-        if(n == 0 || n == 1) return;
 
+        // finding pivot
         int pivot = -1;
-        // find pivot, 
         for(int i=n-2; i>=0; i--) {
             if(nums[i] < nums[i+1]) {
                 pivot = i;
                 break;
             }
         }
-        
-        // travel from back and find the element just greater than the pivot
-        if(pivot != -1) { // valid pivot, if pivot = -1, array in desc order
-            int nextGreatest = 0;
-            for(int i=n-1; i>=0; i--) {
-                if(nums[i] > nums[pivot]) {
-                    nextGreatest = i;
-                    break;
-                }
-            }
-            // swap next greatest and pivot element
-            swap(nums[pivot], nums[nextGreatest]);
+
+        if(pivot == -1) { // last permutation: all elements sorted in descending order
+            reverseElements(nums, 0, n-1);
+            return;
         }
 
-        // reverse the element from pivot+1 till end
-        int i = pivot+1, j = n-1;
-        while(i < j) {
-            swap(nums[i], nums[j]);
-            i++;
-            j--;
+        // finding next greater element than pivot ahead of pivot
+        int pos = n-1;
+        for(int i=n-1; i>pivot; i--) {
+            if(nums[i] > nums[pivot]) {
+                pos = i;
+                break;
+            }
         }
+
+        // swap element at pos at pivot
+        swap(nums[pivot], nums[pos]);
+
+        // reverse the elements after the pivot
+        reverseElements(nums, pivot+1, n-1);
     }
 };
