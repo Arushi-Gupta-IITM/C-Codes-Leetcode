@@ -1,37 +1,30 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        // skipping duplicates in the loop, not using a set
         int n = nums.size();
         sort(nums.begin(), nums.end());
-        vector<vector<int>> ans;      
-        vector<int> trip(3);
-        set<vector<int>> st;
-        int tar;
+        vector<vector<int>> ans;
 
         for(int i=0; i<n; i++) {
-            tar = -nums[i];
-            int si = i+1, ei = n-1;
-            while(si < ei) {
-                int sum = nums[si] + nums[ei];
-                if(sum == tar) {
-                    trip[0] = nums[i];
-                    trip[1] = nums[si];
-                    trip[2] = nums[ei];
-                    st.insert(trip);
-                    si++;
-                    ei--;
-                } else if(sum < tar) {
-                    si++;
-                } else {
-                    ei--;
-                }
-            }      
-            
-        }
+            if(i>0 && nums[i] == nums[i-1]) continue;
+            int l = i+1;
+            int r = n-1;
 
-        for(auto triplet : st) {
-            ans.push_back(triplet);
-        }
+            while(l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+
+                if(sum == 0) {
+                    ans.push_back({nums[i], nums[l], nums[r]});
+                    l++;
+                    r--;
+
+                    while(l < r && nums[l] == nums[l-1]) l++;
+                    while(l < r && nums[r] == nums[r+1]) r--;
+                } else if(sum > 0) r--;
+                else l++;
+            }
+        }           
 
         return ans;
     }
