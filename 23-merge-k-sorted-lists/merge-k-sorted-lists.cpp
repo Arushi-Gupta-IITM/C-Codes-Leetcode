@@ -25,20 +25,26 @@ public:
 
         return head;
     }
+
+    ListNode* mergeKListsUtil(vector<ListNode*>& lists, int si, int ei) {
+        if(si == ei) {
+            return lists[si];
+        }
+
+        int mid = si + (ei-si)/2;
+        ListNode* head1 = mergeKListsUtil(lists, si, mid);
+        ListNode* head2 = mergeKListsUtil(lists, mid+1, ei);
+
+        return merge(head1, head2);
+    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         if(lists.size() == 0) return NULL;
-        
+
         if(lists.size() == 1) {
             return lists[0];
         }
 
-        ListNode* head1 = lists[0];
-        ListNode* head2 = lists[1];
-
-        ListNode* head = merge(head1, head2);
-        lists[0] = head;
-        lists.erase(lists.begin()+1);
-
-        return mergeKLists(lists);
+        int n = lists.size();
+        return mergeKListsUtil(lists, 0, n-1);
     }
 };
