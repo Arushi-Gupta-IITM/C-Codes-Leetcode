@@ -11,21 +11,22 @@
  */
 class Solution {
 public:
+    int ans = 0;
+    
     int height(TreeNode* root) {
-        if(root == NULL) return -1;
-
-        return max(height(root->right), height(root->left)) + 1;
+        if(root == NULL) return 0;
+        return max(height(root->left), height(root->right)) + 1;
     }
+
     int diameterOfBinaryTree(TreeNode* root) {
         if(root == NULL) return 0;
 
-        // diameter does not pass through the root
-        int d1 = diameterOfBinaryTree(root->left);
-        int d2 = diameterOfBinaryTree(root->right);
+        int currDia = height(root->left) + height(root->right);
+        ans = max(ans, currDia);
 
-        // diameter passes thoright root
-        int d3 = 2 + height(root->left) + height(root->right);
+        diameterOfBinaryTree(root->left);
+        diameterOfBinaryTree(root->right);
 
-        return max(d1, max(d2, d3));
+        return ans;
     }
 };
