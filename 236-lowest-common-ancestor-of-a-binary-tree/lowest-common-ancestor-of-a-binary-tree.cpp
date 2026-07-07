@@ -9,27 +9,16 @@
  */
 class Solution {
 public:
-    bool isDescendant(TreeNode* root, TreeNode* desc) {
-        if(root == NULL) return root == desc;
-
-        if(root == desc) return true;
-
-        return isDescendant(root->left, desc) || isDescendant(root->right, desc);      
-
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         if(root == NULL) return NULL;
 
-        if(isDescendant(p, q)) return p;
-        if(isDescendant(q, p)) return q;
+        if(root == p || root == q) return root;
 
-        if(isDescendant(root->right, p) && isDescendant(root->left, q)) return root;
-        if(isDescendant(root->left, p) && isDescendant(root->right, q)) return root;
+        TreeNode* leftLCA = lowestCommonAncestor(root->left, p, q);
+        TreeNode* rightLCA = lowestCommonAncestor(root->right, p, q);
 
-        if(isDescendant(root->left, p) && isDescendant(root->left, q)) return lowestCommonAncestor(root->left, p, q);
-
-        if(isDescendant(root->right, p) && isDescendant(root->right, q)) return lowestCommonAncestor(root->right, p, q);
-
-        return NULL;
+        if(leftLCA != NULL && rightLCA != NULL) return root;
+        if(leftLCA != NULL) return leftLCA;
+        else return rightLCA;
     }
 };
