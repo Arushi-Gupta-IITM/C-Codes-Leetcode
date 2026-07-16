@@ -9,7 +9,6 @@ public:
         if(image[i][j] != org) return;
 
         vis[i][j] = true;
-        org = image[i][j];
         image[i][j] = color;
 
         // call for neighbours
