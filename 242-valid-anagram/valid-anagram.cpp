@@ -9,9 +9,6 @@ public:
 
         for(int i=0; i<n1; i++) {
             freq[s[i]-'a']++;
-        }
-
-        for(int i=0; i<n2; i++) {
             freq[t[i]-'a']--;
         }
 
