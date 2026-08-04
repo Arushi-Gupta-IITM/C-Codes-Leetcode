@@ -17,10 +17,11 @@ public:
                     ans.push_back(trip);
                     si++;
                     ei--;
+                    while(si > i+1 && si < ei && nums[si] == nums[si-1]) si++;
+                    while(si < ei && ei != n-1 && nums[ei] == nums[ei+1]) ei--;
                 } else if(sum > 0) ei--;
-                else si++;
-                while(si > i+1 && si < ei && nums[si] == nums[si-1]) si++;
-                while(si < ei && ei != n-1 && nums[ei] == nums[ei+1]) ei--;
+                else si++;              
+                
             }            
         }
         
