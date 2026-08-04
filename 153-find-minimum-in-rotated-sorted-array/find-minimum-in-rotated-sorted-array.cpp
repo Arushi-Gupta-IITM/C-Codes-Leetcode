@@ -7,12 +7,13 @@ public:
 
         while(si < ei) {
             int mid = si + (ei-si)/2;
-            if(nums[mid] > nums[ei]) { //least element on the right
+            if(nums[mid] > nums[ei]) { // starting element towards right
                 si = mid+1;
             } else {
                 ei = mid;
             }
         }
+
         return nums[si];
     }
 };
