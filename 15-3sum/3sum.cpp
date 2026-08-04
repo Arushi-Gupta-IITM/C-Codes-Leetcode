@@ -1,31 +1,28 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // skipping duplicates in the loop, not using a set
         int n = nums.size();
         sort(nums.begin(), nums.end());
-        vector<vector<int>> ans;
+        set<vector<int>> s;
 
         for(int i=0; i<n; i++) {
-            if(i>0 && nums[i] == nums[i-1]) continue;
-            int l = i+1;
-            int r = n-1;
+            int si = i+1;
+            int ei = n-1;
 
-            while(l < r) {
-                int sum = nums[i] + nums[l] + nums[r];
-
-                if(sum == 0) {
-                    ans.push_back({nums[i], nums[l], nums[r]});
-                    l++;
-                    r--;
-
-                    while(l < r && nums[l] == nums[l-1]) l++;
-                    while(l < r && nums[r] == nums[r+1]) r--;
-                } else if(sum > 0) r--;
-                else l++;
+            while(si < ei) {
+                if(nums[si] + nums[ei] + nums[i] == 0) {
+                    vector<int> trip = {nums[i], nums[si], nums[ei]};
+                    s.insert(trip);
+                    si++;
+                    ei--;
+                } else if(nums[si] + nums[ei] + nums[i] > 0) ei--;
+                else si++;
             }
-        }           
-
+        }
+        vector<vector<int>> ans;
+        for(auto v : s) {
+            ans.push_back(v);
+        }
         return ans;
     }
 };
