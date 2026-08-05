@@ -7,23 +7,29 @@ public:
 
         return false;
     }
+
+    bool isCapital(char ch) {
+        if(ch >= 'A' && ch <= 'Z') return true;
+        return false;
+    }
     bool isPalindrome(string s) {
-        int n = s.length();
         string str = "";
 
-        for(int i=0; i<n; i++) {
+        for(int i=0; i<s.length(); i++) {
             char ch = s[i];
             if(isAlphaNumeric(ch)) {
-                str.push_back((char)tolower(ch));
+                if(isCapital(ch)) ch = tolower(ch);
+                str += ch;
             }
         }
 
-        int i = 0, j = str.length()-1;
+        int si = 0;
+        int ei = str.length()-1;
 
-        while(i < j) {
-            if(str[i] != str[j]) return false;
-            i++;
-            j--;
+        while(si <= ei) {
+            if(str[si] != str[ei]) return false;
+            si++;
+            ei--;
         }
         return true;
     }
