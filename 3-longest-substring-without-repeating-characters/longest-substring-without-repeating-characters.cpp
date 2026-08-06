@@ -5,10 +5,10 @@ public:
         int st = 0;
         int len = 0;
         int maxLen = 0;
-        unordered_map<char, int> mp; // char and its last occurence index
+        vector<int> mp(128, -1); // char and its last occurence index
 
         for(int i=0; i<n; i++) {
-            if(mp.find(s[i]) == mp.end()) {
+            if(mp[s[i]] == -1) {
                 len++;
                 maxLen = max(len, maxLen);
             } else {
