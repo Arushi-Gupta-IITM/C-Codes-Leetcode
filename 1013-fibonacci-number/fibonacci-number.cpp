@@ -24,13 +24,24 @@ public:
         return dp[n];
     }
 
-    // int fibSO() {
+    int fibSO(int n) {
+        if(n <= 1) return n;
+        int first = 0;
+        int sec = 1;
+        int ans ;
 
-    // }
+        for(int i=2; i<=n; i++) {
+            ans = first + sec;
+
+            first = sec;
+            sec = ans;
+        }
+        return ans;
+    }
     int fib(int n) {
         // vector<int> dp(n+1, -1);
         // return fibM(n, dp);
 
-        return fibT(n);
+        return fibSO(n);
     }
 };
