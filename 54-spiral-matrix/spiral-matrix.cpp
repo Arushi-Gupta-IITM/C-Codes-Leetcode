@@ -1,39 +1,37 @@
 class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>>& mat) { // m*n
+    vector<int> spiralOrder(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
         vector<int> ans;
-        int m = mat.size();
-        int n = mat[0].size();
 
-        int sr = 0, er = m-1, sc = 0, ec = n-1;
-
+        int sr = 0, sc = 0, er = n-1, ec = m-1;
         while(sr <= er && sc <= ec) {
-
-            // right traversal
+            // top
             for(int j=sc; j<=ec; j++) {
                 ans.push_back(mat[sr][j]);
             }
             sr++;
-            // down traversal
+            // right
             for(int i=sr; i<=er; i++) {
                 ans.push_back(mat[i][ec]);
             }
             ec--;
-            // left traversal
+            // bottom
             if(sr <= er) {
                 for(int j=ec; j>=sc; j--) {
-                ans.push_back(mat[er][j]);
+                    ans.push_back(mat[er][j]);
                 }
                 er--;
             }
             
-            //upward traversal
+            // left
             if(sc <= ec) {
-                 for(int i=er; i>=sr; i--) {
-                ans.push_back(mat[i][sc]);
+                for(int i=er; i>=sr; i--) {
+                    ans.push_back(mat[i][sc]);
                 }
                 sc++;
-            }           
+            }            
         }
 
         return ans;
