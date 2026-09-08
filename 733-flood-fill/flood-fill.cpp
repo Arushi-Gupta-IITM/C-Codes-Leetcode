@@ -1,20 +1,29 @@
 class Solution {
 public:
-    void floodFillUtil(vector<vector<int>>& image, int row, int col, int color, int n, int m, int orgColor) {
-        image[row][col] = color;
+    void floodFillUtil(int i, int j, int color, vector<vector<int>>& mat, int orgCol, vector<vector<bool>> &vis) {
+        int n = mat.size();
+        int m = mat[0].size();
+        if(i < 0 || i >= n) return;
+        if(j < 0 || j >= m) return;
+        if(vis[i][j] == true) return;
+        if(mat[i][j] != orgCol) return;
 
-        if(row-1 >= 0 && image[row-1][col] == orgColor) floodFillUtil(image, row-1, col, color, n, m, orgColor);
-        if(row+1 < n && image[row+1][col] == orgColor) floodFillUtil(image, row+1, col, color, n, m, orgColor);
-        if(col-1 >= 0 && image[row][col-1] == orgColor) floodFillUtil(image, row, col-1, color, n, m, orgColor);
-        if(col+1 < m && image[row][col+1] == orgColor) floodFillUtil(image, row, col+1, color, n, m, orgColor);
+        mat[i][j] = color;
+        vis[i][j] = true;
+
+        // call for neighbours: top, bottom, left, right
+        floodFillUtil(i-1, j, color, mat, orgCol, vis);
+        floodFillUtil(i+1, j, color, mat, orgCol, vis);
+        floodFillUtil(i, j-1, color, mat, orgCol, vis);
+        floodFillUtil(i, j+1, color, mat, orgCol, vis);
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-        // n * m grid
-        int n = image.size();
-        int m = image[0].size();
-        if (image[sr][sc] == color) return image;
-        floodFillUtil(image, sr, sc, color, n, m, image[sr][sc]);
+    vector<vector<int>> floodFill(vector<vector<int>>& mat, int sr, int sc, int color) {
+        int n = mat.size();
+        int m = mat[0].size();
+        int orgCol = mat[sr][sc];
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
 
-        return image;
+        floodFillUtil(sr, sc, color, mat, orgCol, vis);
+        return mat;
     }
 };
