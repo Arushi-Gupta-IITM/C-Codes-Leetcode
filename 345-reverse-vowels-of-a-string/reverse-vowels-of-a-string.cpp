@@ -5,16 +5,20 @@ public:
         if(ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') return true;
         return false;
     }
+
     string reverseVowels(string s) {
         int n = s.length();
         int si = 0, ei = n-1;
-        while(si < ei) {
-            while(si < n && !isVowel(s[si])) si++;
-            while(ei >= 0 && !isVowel(s[ei])) ei--;
 
-            if(si < ei && si < n && ei >= 0) swap(s[si], s[ei]);
-            si++;
-            ei--;
+        while(si < ei) {
+            while(si < ei && isVowel(s[si]) == false) si++;
+            while(si < ei && isVowel(s[ei]) == false) ei--;
+
+            if(si < ei) {
+                swap(s[si], s[ei]);
+                si++;
+                ei--;
+            }
         }
         return s;
     }
