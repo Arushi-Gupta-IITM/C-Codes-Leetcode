@@ -12,14 +12,15 @@
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-       if(root == NULL) return NULL;
+        if(root == NULL) return NULL;
+        if(root->left == NULL && root->right == NULL) return root;
 
-       TreeNode* invLeft =  invertTree(root->left);
-       TreeNode* invRight = invertTree(root->right);
+        TreeNode* invLeft = invertTree(root->left);
+        TreeNode* invRight = invertTree(root->right);
 
-       root->left = invRight;
-       root->right = invLeft;
+        root->left = invRight;
+        root->right = invLeft;
 
-       return root;
+        return root;
     }
 };
