@@ -11,26 +11,30 @@
  */
 class Solution {
 public:
-    TreeNode* buildTreeUtil(vector<int>& preorder, vector<int>& inorder, int &idx, int si, int ei, unordered_map<int, int> &mp) {
+    TreeNode* buildTreeUtil(vector<int> &p, vector<int> &i, int &idx, int si, int ei, unordered_map<int, int> &mp) {
         if(si > ei) return NULL;
-        
-        int rootIdx = mp[preorder[idx]];
-        TreeNode* root = new TreeNode(preorder[idx]);
-        idx++;
-                
-        root->left = buildTreeUtil(preorder, inorder, idx, si, rootIdx-1, mp);
-        root->right = buildTreeUtil(preorder, inorder, idx, rootIdx+1, ei, mp);
+        if(idx >= p.size()) return NULL;
 
-        return root; 
-    }
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        unordered_map<int, int> mp; // map of inorder, element: index
-        for(int i=0; i<inorder.size(); i++) {
-            mp[inorder[i]] = i;
-        }
+        TreeNode* root = new TreeNode(p[idx]); 
+        int rootIdx = mp[p[idx]];
+        idx++;
         
-        int si = 0, ei = preorder.size()-1;
+        root->left = buildTreeUtil(p, i, idx, si, rootIdx-1, mp);
+        root->right = buildTreeUtil(p, i, idx, rootIdx+1, ei, mp);
+
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& p, vector<int>& i) {
+        int n = p.size();
+        if(n == 0) return NULL;
+
+        // storing inorder sequence in a hashmap
+        unordered_map<int, int> mp;
+        for(int j=0; j<n; j++) {
+            mp[i[j]] = j;
+        }
+
         int idx = 0;
-        return buildTreeUtil(preorder, inorder, idx, si, ei, mp);
+        return buildTreeUtil(p, i, idx, 0, n-1, mp);
     }
 };
