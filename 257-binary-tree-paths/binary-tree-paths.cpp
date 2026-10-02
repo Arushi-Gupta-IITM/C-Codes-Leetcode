@@ -11,35 +11,33 @@
  */
 class Solution {
 public:
-    void binaryTreePathsUtil(TreeNode* root, string &path, vector<string> &ans) {
-        if(root == NULL) {
-            return;
-        } 
-               
-        string curr = to_string(root->val);
-        path.append(curr);
-        path.append("->");
+    void treePaths(TreeNode* root, string &path, vector<string> &ans) {
+        if(root == NULL) return;
 
-        if(root->left == NULL && root->right == NULL) {
+        int data = root->val;
+        string str = to_string(data);
+
+        if(root->left == NULL && root->right == NULL) { // leaf node            
+            path.append(str);
             ans.push_back(path);
-            path.erase(path.size()-(curr.size()+2));
+            path.erase(path.size() - str.size());
             return;
         }
-        binaryTreePathsUtil(root->left, path, ans);
-        binaryTreePathsUtil(root->right, path, ans);
 
-        path.erase(path.size()-(curr.size()+2));
+        str.append("->");
+        path.append(str);
+
+        treePaths(root->left, path, ans);
+        treePaths(root->right, path, ans);
+
+        path.erase(path.size() - str.size());
     }
     vector<string> binaryTreePaths(TreeNode* root) {
         vector<string> ans;
-        string path = "";
+        if(root == NULL) return ans;
 
-        binaryTreePathsUtil(root, path, ans);
-        for(int i=0; i<ans.size(); i++) {
-            string curr = ans[i];
-            curr = curr.erase(curr.size()-2);
-            ans[i] = curr;
-        }
+        string path = "";
+        treePaths(root, path, ans);
         return ans;
     }
 };
