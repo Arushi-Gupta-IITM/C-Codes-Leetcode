@@ -11,29 +11,22 @@
  */
 class Solution {
 public:
-    TreeNode* buildBST(vector<int> &p, int si, int ei) {
-        if(ei >= p.size()) return NULL;
-        if(si > ei) return NULL;
+    TreeNode* buildBST(vector<int> &p, int &i, int ub) {
+        if(i >= p.size()) return NULL;
+        if(p[i] >= ub) return NULL;
 
-        TreeNode* root = new TreeNode(p[si]);
-
-        int idx = INT_MAX;
-        for(int i=si+1; i<=ei; i++) {
-            if(p[i] > p[si]) {
-                idx = i;
-                break;
-            }
-        }
-
-        root->left = buildBST(p, si+1, min(idx-1, ei));
-        root->right = buildBST(p, idx, ei);
+        TreeNode* root = new TreeNode(p[i]);
+        i++;
+        root->left = buildBST(p, i, root->val);
+        root->right = buildBST(p, i, ub);
 
         return root;
     }
     TreeNode* bstFromPreorder(vector<int>& p) {
         int n = p.size();
         if(n == 0) return NULL;
+        int i = 0;
 
-        return buildBST(p, 0, n-1);
+        return buildBST(p, i, INT_MAX);
     }
 };
