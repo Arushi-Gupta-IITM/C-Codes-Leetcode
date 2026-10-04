@@ -11,28 +11,29 @@
  */
 class Solution {
 public:
-    TreeNode* insertNode(TreeNode* root, int el) {
-        if(root == NULL) {
-            TreeNode* newNode = new TreeNode(el);
-            return newNode;
+    TreeNode* buildBST(vector<int> &p, int si, int ei) {
+        if(ei >= p.size()) return NULL;
+        if(si > ei) return NULL;
+
+        TreeNode* root = new TreeNode(p[si]);
+
+        int idx = INT_MAX;
+        for(int i=si+1; i<=ei; i++) {
+            if(p[i] > p[si]) {
+                idx = i;
+                break;
+            }
         }
 
-        if(el < root->val) {
-            root->left = insertNode(root->left, el);
-        } else {
-            root->right = insertNode(root->right, el);
-        }
+        root->left = buildBST(p, si+1, min(idx-1, ei));
+        root->right = buildBST(p, idx, ei);
+
         return root;
     }
-    
     TreeNode* bstFromPreorder(vector<int>& p) {
         int n = p.size();
         if(n == 0) return NULL;
 
-        TreeNode* root = new TreeNode(p[0]);
-        for(int i=1; i<n; i++) {
-            insertNode(root, p[i]);
-        }
-        return root;
+        return buildBST(p, 0, n-1);
     }
 };
