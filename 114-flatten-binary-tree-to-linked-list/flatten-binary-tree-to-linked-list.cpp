@@ -24,11 +24,11 @@ public:
         while(temp->right != NULL) temp = temp->right;
 
         temp->right = flattenUtil(right);
+
         return root;
     }
 
     void flatten(TreeNode* root) {
-        if(root == NULL) return;
-        flattenUtil(root);
+        root = flattenUtil(root);        
     }
 };
