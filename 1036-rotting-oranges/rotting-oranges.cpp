@@ -13,51 +13,54 @@ public:
         return true;
     }
 
-    int orangesRotting(vector<vector<int>>& grid) { // multi source bfs
+    int orangesRotting(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        queue<vector<int>> q;
 
-        // pushing source into the queue
+        queue<vector<int>> q;
+        int ans = 0;
+        // adding rotten oranges in the queue at t = 0
         for(int i=0; i<n; i++) {
             for(int j=0; j<m; j++) {
-                if(grid[i][j] == 2) q.push({i, j, 0});
+                if(grid[i][j] == 2) {
+                    q.push({0, i, j});
+                }
             }
         }
 
-        int ans = 0;
-        while(q.size() > 0) {
-            int i = q.front()[0];
-            int j = q.front()[1];
-            int t = q.front()[2];
-            ans = max(ans, t);
+        while(!q.empty()) {
+            int t = q.front()[0];
+            int i = q.front()[1];
+            int j = q.front()[2];
             q.pop();
-
-            // left
-            if(j-1 >= 0 && grid[i][j-1] == 1) {
-                grid[i][j-1] = 2;
-                q.push({i, j-1, t+1});
-            }
-            // right
-            if(j+1 < m && grid[i][j+1] == 1) {
-                grid[i][j+1] = 2;
-                q.push({i, j+1, t+1});
-            }
+            ans = max(ans, t);
 
             // top
             if(i-1 >= 0 && grid[i-1][j] == 1) {
                 grid[i-1][j] = 2;
-                q.push({i-1, j, t+1});
+                q.push({t+1, i-1, j});
             }
 
-            // down
+            // bottom
             if(i+1 < n && grid[i+1][j] == 1) {
                 grid[i+1][j] = 2;
-                q.push({i+1, j, t+1});
+                q.push({t+1, i+1, j});
+            }
+
+            // left
+            if(j-1 >= 0 && grid[i][j-1] == 1) {
+                grid[i][j-1] = 2;
+                q.push({t+1, i, j-1});
+            }
+
+            // right
+            if(j+1 < m && grid[i][j+1] == 1) {
+                grid[i][j+1] = 2;
+                q.push({t+1, i, j+1});
             }
         }
 
         if(allRotten(grid)) return ans;
-        return -1;        
+        else return -1;
     }
 };
