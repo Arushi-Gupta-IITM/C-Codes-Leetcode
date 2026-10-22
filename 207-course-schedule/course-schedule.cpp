@@ -18,8 +18,8 @@ public:
         vector<vector<int>> adj(V, vector<int>());
         // create adjacency list
         for(auto &e : edges) {
-            int u = e[0];
-            int v = e[1];
+            int u = e[1];
+            int v = e[0];
 
             adj[u].push_back(v);
         }
