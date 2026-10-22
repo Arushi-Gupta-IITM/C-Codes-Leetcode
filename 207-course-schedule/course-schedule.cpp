@@ -7,8 +7,8 @@ public:
         for(int v : adj[u]) {
             if(vis[v] == false && isCycle(v, adj, vis, path)) { 
                 return true;
-            } else {
-                if(path[v]) return true;
+            } else if(path[v]) {
+                return true;
             }
         }
         path[u] = false;
