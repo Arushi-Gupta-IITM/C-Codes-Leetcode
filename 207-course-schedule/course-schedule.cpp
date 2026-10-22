@@ -1,33 +1,36 @@
 class Solution {
 public:
-    bool isCycle(int u, vector<bool> &vis, vector<bool> &recPath, vector<vector<int>> &adj) {
+    bool isCycle(int u, vector<vector<int>> &adj, vector<bool> &vis, vector<bool> &path) {
         vis[u] = true;
-        recPath[u] = true;
+        path[u] = true;
 
         for(int v : adj[u]) {
-            if(vis[v] == false) {
-                if(isCycle(v, vis, recPath, adj)) return true;
-            } else if(recPath[v]) return true;
+            if(vis[v] == false && isCycle(v, adj, vis, path)) { 
+                return true;
+            } else {
+                if(path[v]) return true;
+            }
         }
-        recPath[u] = false;
+        path[u] = false;
         return false;
     }
-    bool canFinish(int n, vector<vector<int>>& edges) {
-        // check for cycle in directed graph
-        vector<vector<int>> adj(n);
+    bool canFinish(int V, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(V, vector<int>());
+        // create adjacency list
+        for(auto &e : edges) {
+            int u = e[0];
+            int v = e[1];
 
-        for(vector<int> e : edges) {
-            adj[e[1]].push_back(e[0]);
+            adj[u].push_back(v);
+        }
+        // check if a cycle exists in a directed graph
+        vector<bool> vis(V, false);
+        vector<bool> path(V, false);
+        for(int i=0; i<V; i++) {
+            if(vis[i] == false && isCycle(i, adj, vis, path)) return false; 
         }
 
-        // cycle in directed graph: using recursion Path
-        vector<bool> vis(n, false);
-        vector<bool> recPath(n, false);
-
-        for(int i=0; i<n; i++) {
-            if(vis[i] == false && isCycle(i, vis, recPath, adj)) return false; 
-        }
-
+        // no cycle present, given graph is a DAG, top sort possible
         return true;
     }
 };
