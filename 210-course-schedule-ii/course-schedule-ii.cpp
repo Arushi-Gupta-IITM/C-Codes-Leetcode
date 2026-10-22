@@ -1,64 +1,58 @@
 class Solution {
 public:
-    bool isCycle(int u, vector<bool> &vis, vector<bool> &recPath, vector<vector<int>> &adj) {
+    bool isCycleDFS(int u, vector<vector<int>> &adj, vector<bool> &vis, vector<bool> &path) {
         vis[u] = true;
-        recPath[u] = true;
+        path[u] = true;
 
         for(int v : adj[u]) {
-            if(vis[v] == false) {
-                if(isCycle(v, vis, recPath, adj)) return true;
-            } else if(recPath[v]) return true;
+            if(vis[v] == false && isCycleDFS(v, adj, vis, path)) return true;
+            else if(path[v]) return true;
         }
-
-        recPath[u] = false;
+        path[u] = false;
         return false;
     }
 
-    void dfs(int u, vector<bool> &vis, stack<int> &s, vector<vector<int>> &adj) {
+    void topSort(int u, vector<vector<int>> &adj, vector<bool> &vis, stack<int> &s) {
         vis[u] = true;
 
         for(int v : adj[u]) {
-            if(vis[v] == false) {
-                dfs(v, vis, s, adj);
-            }
+            if(vis[v] == false) topSort(v, adj, vis, s);
         }
         s.push(u);
     }
-
-    vector<int> findOrder(int n, vector<vector<int>>& edges) {
-        // adjacency list
-        vector<vector<int>> adj(n);
-        for(const auto &e : edges) {
-            adj[e[1]].push_back(e[0]);
+    vector<int> findOrder(int V, vector<vector<int>>& edges) {        
+        // create adjacency list
+        vector<vector<int>> adj(V, vector<int>());
+        for(auto &e : edges) {
+            // u --> v
+            int u = e[1];
+            int v = e[0];
+            adj[u].push_back(v);
         }
-        // check for cycle, if no cycle return topological sort
-        bool cycle = false;
-        vector<bool> vis(n, false);
-        vector<bool> recPath(n, false);
-
-        for(int i=0; i<n; i++) {
-            if(vis[i] == false && isCycle(i, vis, recPath, adj)) cycle = true;
+        // check for cycle
+        bool isCycle = false;
+        vector<bool> vis(V, false);
+        vector<bool> path(V, false);
+        for(int i=0; i<V; i++) {
+            if(!vis[i] && isCycleDFS(i, adj, vis, path)) {
+                isCycle = true;
+                break;
+            }
         }
-
-        if(cycle) {
-            vector<int> ans;
-            return ans;
-        }
-
-        // no cycle exists topological sorting
-        vis.assign(n, false);
-        stack<int> s;
-
-        for(int i=0; i<n; i++) {
-            if(vis[i] == false) dfs(i, vis, s, adj);
-        }
-
         vector<int> ans;
+        if(isCycle) return ans;
+
+        // top sort
+        fill(vis.begin(), vis.end(), false);
+        stack<int> s;
+        for(int i=0; i<V; i++) {
+            if(vis[i] == false) topSort(i, adj, vis, s);
+        }
+
         while(!s.empty()) {
             ans.push_back(s.top());
             s.pop();
         }
-
         return ans;
     }
 };
