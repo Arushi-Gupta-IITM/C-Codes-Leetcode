@@ -22,8 +22,9 @@ public:
         // stores weight, vertex
         pq.push({0, 0});
         int minCost = 0;
+        int countOfEdges = 0;
 
-        while(!pq.empty()) {
+        while(!pq.empty() && countOfEdges < n) {
             int dist = pq.top().first;
             int u = pq.top().second;
             pq.pop();
@@ -31,6 +32,7 @@ public:
             if(vis[u]) continue;
 
             minCost += dist;
+            countOfEdges++;
             vis[u] = true;
 
             for(auto &p : adj[u]) {
