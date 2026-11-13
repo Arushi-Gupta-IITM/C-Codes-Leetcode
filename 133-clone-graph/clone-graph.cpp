@@ -21,26 +21,25 @@ public:
 
 class Solution {
 public:
-    // use an unordered map to store original and cloned node
-    unordered_map<Node*, Node*> mp;
+    unordered_map<Node*, Node*> mp; // stores the created nodes with original --> copy
     Node* cloneGraph(Node* node) {
-        // base case
-        if(node == nullptr) return nullptr;
-        if(mp.find(node) != mp.end()) {
-            return mp[node];
-        }
+        if(node == NULL) return NULL;
+        if(mp.find(node) != mp.end()) return mp[node];        
 
         Node* copyNode = new Node(node->val);
         mp[node] = copyNode;
 
-        vector<Node*> neigh = node->neighbors;
-        vector<Node*> neighCopy;
+        vector<Node*> orgNeighbors = node->neighbors;
+        vector<Node*> copyNeighbors;
 
-        for(int i=0; i<neigh.size(); i++) {
-            Node* u = neigh[i];
-            neighCopy.push_back(cloneGraph(u));
+        for(auto v : orgNeighbors) {
+            if(mp.find(v) == mp.end()) { // copy of v has not been created in the memory
+                Node* copyV = cloneGraph(v);
+            }
+            copyNeighbors.push_back(mp[v]);
         }
-        copyNode->neighbors = neighCopy;        
+
+        copyNode->neighbors = copyNeighbors;
         return copyNode;
     }
 };
