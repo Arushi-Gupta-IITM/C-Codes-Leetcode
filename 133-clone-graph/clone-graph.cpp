@@ -29,14 +29,10 @@ public:
         Node* copyNode = new Node(node->val);
         mp[node] = copyNode;
 
-        vector<Node*> orgNeighbors = node->neighbors;
         vector<Node*> copyNeighbors;
 
-        for(auto v : orgNeighbors) {
-            if(mp.find(v) == mp.end()) { // copy of v has not been created in the memory
-                Node* copyV = cloneGraph(v);
-            }
-            copyNeighbors.push_back(mp[v]);
+        for(auto v : node->neighbors) {
+            copyNeighbors.push_back(cloneGraph(v));
         }
 
         copyNode->neighbors = copyNeighbors;
